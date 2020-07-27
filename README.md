@@ -16,4 +16,3 @@
 >  * User-Centered Interaction Design Course _(Graduate Level)_
 8.  Graph Database Implementation _(Nov. 2019 - Jan. 2020)_
 >  * Advanced Database Systems Course  _(Graduate Level)_
->>>>>>> parent of 576b0f4... Revert "First Update"
