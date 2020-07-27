@@ -1,0 +1,261 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+  table {
+    border:1px solid black;
+    width:85%;
+    border-collapse:collapse;
+  }
+  th {
+    background-color: #377ba8;
+    color: white;
+  }
+  th, td {
+    border: 1px solid black;
+    text-align:left; 
+    padding:15px;
+    width:20%;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #ddd;
+  }
+  input, select{
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  form {
+    margin: 10px 0;
+    width: 85%;
+    padding-left: 1px;
+  }
+</style>
+
+<script>
+  function dynamic() {
+    var e = document.getElementById("func");
+    var input1 = document.getElementById("input1");
+    var input2 = document.getElementById("input2");
+    var submit = document.getElementById("submit");
+    console.log(e.selectedIndex);
+    if (e.options[e.selectedIndex].value == "修改課程名稱") {
+      input1.placeholder = "原課名";
+      input2.placeholder = "新課名";
+      submit.value = "修改課程名稱";
+    }
+    else if (e.options[e.selectedIndex].value != "") {
+      input1.placeholder = "時間";
+      input2.placeholder = "課名";
+      if (e.selectedIndex == 1) {
+        submit.value = "增加課程";
+      }
+      else if (e.selectedIndex == 2) {
+        submit.value = "刪除課程";
+      }
+      else if (e.selectedIndex == 4) {
+        submit.value = "修改課程時間";
+      }
+      else {
+        submit.value = "";
+      }
+    }
+  }
+</script>
+<head>
+    <script src="/static/jquery-3.4.1.min.js"></script>
+    <script src="/static/cytoscape.min.js"></script>
+<!--<script>-->
+<!--$(function(){-->
+<!--  $.get('/graph' , function(result) {-->
+<!--    /*var style = [-->
+<!--      { selector: 'node[label = "Person"]', css: {'background-color': '#6FB1FC','content': 'data(name)'}},-->
+<!--      { selector: 'node[label = "Movie"]', css: {'background-color': '#F5A45D','content': 'data(title)'}},-->
+<!--	   { selector: 'edge', css: {'curve-style': 'bezier','target-arrow-shape': 'triangle', 'content': 'data(relationship)'}} -->
+<!--    ];*/-->
+<!---->
+<!--	//将cytoscape样式定义为变量cy-->
+<!--    var cy =window.cy = cytoscape({-->
+<!--      container: document.getElementById('cy'),	  // 定义需要渲染的容器-->
+<!--      /*style: style,*/-->
+<!--	  style:cytoscape.stylesheet()-->
+<!--      .selector('node[label = "Students"]').css({'background-color': '#6FB1FC','content': 'data(name)'}) //节点样式-->
+<!--      .selector('node[label = "Courses"]').css({'background-color': '#F5A45D','content': 'data(name)'})-->
+<!--	  .selector('edge').css({'curve-style': 'bezier','target-arrow-shape': 'triangle','line-color': '#ffaaaa','target-arrow-color': '#ffaaaa','content': 'data(relationship)'}) //边线样式-->
+<!--      .selector(':selected').css({'background-color': 'black','line-color': 'black','target-arrow-color': 'black','source-arrow-color': 'black','opacity': 1}) //点击后节点与边的样式-->
+<!--      .selector('.faded').css({'opacity': 0.25,'text-opacity': 0}),-->
+<!--      layout: { name: 'cose', fit: true },  //画布自适应大小-->
+<!--      elements: result.elements-->
+<!--	});-->
+<!--		-->
+<!--	  -->
+<!--    /* cy.nodes().forEach(function(ele) {-->
+<!--		ele.qtip({-->
+<!--			content: {-->
+<!--			text: function(ele){return 'Example qTip on ele ' + ele.data('id')},-->
+<!--			title: ele.data('name')-->
+<!--			},-->
+<!--			style: {-->
+<!--			classes: 'qtip-bootstrap'-->
+<!--			},-->
+<!--			position: {-->
+<!--			my: 'bottom center',-->
+<!--			at: 'top center',-->
+<!--			}-->
+<!--				-->
+<!--		})-->
+<!--	}); */-->
+<!--		-->
+<!--	cy.elements().qtip({ //点击elements处的提醒-->
+<!--		content: //function(){ return 'Example qTip on ele ' + this.id() },-->
+<!--			{text:'asdf',-->
+<!--			title:function(){ return 'Example qTip on ele ' + this.id() }},-->
+<!--		position: {-->
+<!--			my: 'top center',-->
+<!--			at: 'bottom center'-->
+<!--		},-->
+<!--		style: {-->
+<!--			classes: 'qtip-bootstrap',-->
+<!--			tip: {-->
+<!--				width: 16,-->
+<!--				height: 8-->
+<!--			}-->
+<!--		}-->
+<!--	});-->
+<!---->
+<!--			// call on core,点击空白处的提醒-->
+<!--	cy.qtip({-->
+<!--		content: 'Example qTip on core bg',-->
+<!--		position: {-->
+<!--			my: 'top center',-->
+<!--			at: 'bottom center'-->
+<!--		},-->
+<!--		show: {-->
+<!--			cyBgOnly: true-->
+<!--		},-->
+<!--		style: {-->
+<!--			classes: 'qtip-bootstrap',-->
+<!--			tip: {-->
+<!--				width: 16,-->
+<!--				height: 8-->
+<!--			}-->
+<!--		}-->
+<!--	}); -->
+<!--    -->
+<!--	  /* cy.nodes().forEach(function(ele) {-->
+<!--			ele.qtip({-->
+<!--			  content: {-->
+<!--				text: qtipText(ele),-->
+<!--				title: ele.data('name')-->
+<!--			  },-->
+<!--			  style: {-->
+<!--				classes: 'qtip-bootstrap'-->
+<!--			  },-->
+<!--			  position: {-->
+<!--				my: 'bottom center',-->
+<!--				at: 'top center',-->
+<!--				target: ele-->
+<!--			  }-->
+<!--			})-->
+<!--		  });-->
+<!--    	-->
+<!--		function qtipText(node) {-->
+<!--		  -->
+<!--		  -->
+<!--		  var description = '<i>' + node.data('id') + '</i>';-->
+<!--		  return description + '</p>';-->
+<!--		} */-->
+<!--}, 'json');-->
+<!--});-->
+<!--    </script>-->
+</head>
+<h2>{{ username }}'s profile</h2>
+{% if session.username %}
+    {% if session.username == username %}
+        <h3>修課紀錄</h3>
+        <form action="{{ url_for('profile', username = session['username']) }}" method="post">
+          <select id="func" onchange="dynamic()">
+            <option value="" selected disabled hidden>選擇功能</option>
+            <option value="增加課程">增加課程</option>
+            <option value="刪除課程">刪除課程</option>
+            <option value="修改課程名稱">修改課程名稱</option>
+            <option value="修改修課時間">修改修課時間</option>
+          </select>
+          <input type="text" name = "input1" placeholder="" id="input1">
+          <input type="text" name = "input2" placeholder="" id="input2">
+          <input type="submit" value="送出" name="submit" id="submit">
+        </form>
+
+        {% for history in histories %}
+          <table>
+            <tr>
+              <th>修課時間</th>
+              <th>課程名稱</th>
+              <th>任課教授</th>
+            </tr>
+            {% for his in history %}
+            <tr>
+              <td>{{ his[0] }}</td>
+              <td>{{ his[1] }}</td>
+              <td>{{ his[2] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% else %}
+          <p>您尚未修過任何課程!</p>
+        {% endfor %}
+ 
+        <p></p>
+
+        {% for rec in recommend %}
+        <h3>推薦課程</h3>
+        <table>
+          <tr>
+            <th>課程名稱</th>
+            <th>先修課程</th>
+            <th>必修課程</th>
+          </tr>
+          {% for r in rec %}
+          <tr>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endfor %}
+
+        {% include "index.html" %}
+<!--        <div id="cy" style="height: 400px;"></div>-->
+
+        <p></p>
+
+        <h3>和你修過同一堂課的同學們</h3>
+        {% for common in commons %}
+          <table>
+            <tr>
+              <th>課程名稱</th>
+              <th>同學姓名</th>
+            </tr>
+           {% for com in common %}
+            <tr>
+              <td>{{ com[0] }}</td>
+              <td>{{ com[1] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% else %}
+          <p>沒有人和你修過一樣的課程!</p>
+        {% endfor %}
+
+    {% endif %}
+{% endif %}
+
+{% endblock %}

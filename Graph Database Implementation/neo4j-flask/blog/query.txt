@@ -1,0 +1,1 @@
+MATCH p=(:Students {name:{username}})-[:修]->(:Courses)<-[:先修*1..2]-(c:Courses) RETURN p
