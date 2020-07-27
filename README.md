@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-"# Projects" 
-=======
 # Projects
 
 1.  FPGA Implementation  _(Apr. 2016 - June 2016)_  
